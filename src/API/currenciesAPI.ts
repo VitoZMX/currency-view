@@ -1,6 +1,5 @@
 import axios from 'axios'
 import {CurrencyRateChartType, RateType} from '../types/types'
-import {subtractWorkday} from '../utils/utils'
 
 const url = 'https://api.nbrb.by/exrates/'
 export const instance = axios.create({
@@ -17,8 +16,7 @@ export const currenciesAPI = {
             .then(response => response.json())
     },
     async getPreviousRateOneCurrencies(ID: number, data: string) {
-        const previousDate = subtractWorkday(new Date(data))
-        return instance.get<CurrencyRateChartType[]>(`rates/Dynamics/${ID}?startDate=${previousDate}&endDate=${previousDate}`).then(response => {
+        return instance.get<CurrencyRateChartType[]>(`rates/Dynamics/${ID}?startDate=${data}&endDate=${data}`).then(response => {
             const data = response.data[0]
             data.Date = data.Date.split('T')[0].replace(/-/g, '.')
             return data
