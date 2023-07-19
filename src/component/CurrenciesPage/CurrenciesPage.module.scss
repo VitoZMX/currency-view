@@ -19,20 +19,9 @@
     vertical-align: middle;
     border: 1px solid #ccc;
 
-    &.negative::before, &.positive::before {
+    &.negative svg, &.positive svg {
       margin-right: 5px;
-      font-weight: bold;
-    }
-
-    &.positive::before {
-      content: '\1F845';
-      color: green;
-      right: 5px;
-    }
-
-    &.negative::before {
-      content: '\1F847';
-      color: red;
+      height: 1.2rem;
     }
   }
 
@@ -59,6 +48,9 @@
     th, td {
       font-size: 1rem;
     }
+    .negative svg, .positive svg {
+      height: 1rem;
+    }
   }
 
   @media only screen and (max-width: 720px) {
@@ -71,11 +63,21 @@
   @media only screen and (max-width: 480px) {
     th, td {
       font-size: 0.8rem;
+
+      &.negative svg, &.positive svg {
+        height: 0.8rem;
+      }
     }
   }
+
   @media only screen and (max-width: 360px) {
     th, td {
       font-size: 0.6rem;
+
+      &.negative svg, &.positive svg {
+        height: 0.6rem;
+      }
     }
+
   }
 }

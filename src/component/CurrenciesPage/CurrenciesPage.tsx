@@ -2,6 +2,7 @@ import React from 'react'
 import s from './CurrenciesPage.module.scss'
 import {RateType} from '../../types/types'
 import {useNavigate} from 'react-router-dom'
+import {ReactComponent as ArrowSVG} from '../../assets/image/arrow.svg'
 
 type CurrenciesPagePropsType = {
     rateDay: RateType[]
@@ -34,7 +35,10 @@ export function CurrenciesPage({rateDay}: CurrenciesPagePropsType) {
                         <tr key={row.Cur_ID} onClick={() => handleRedirectToMoreInfo(row.Cur_ID)}>
                             <td>{row.Cur_Name}</td>
                             <td>{row.Cur_Scale} {row.Cur_Abbreviation}</td>
-                            <td className={`${s[rateClass]}`}>{row.Cur_OfficialRate} BYN</td>
+                            <td className={`${s[rateClass]} ${rateClass}` } >
+                                    <ArrowSVG/>
+                                {row.Cur_OfficialRate} BYN
+                            </td>
                             <td>{date}</td>
                         </tr>
                     )

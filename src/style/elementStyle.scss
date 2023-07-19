@@ -49,3 +49,12 @@ button {
   padding: 0 10px;
   max-width: $container-max-width;
 }
+
+.positive svg {
+  fill: green;
+}
+
+.negative svg {
+  fill: red;
+  transform: scale(1, -1);
+}
