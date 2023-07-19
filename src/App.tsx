@@ -7,6 +7,7 @@ import {CurrencyFullDataPage} from './component/CurrencyFullDataPage/CurrencyFul
 import {currenciesAPI} from './API/currenciesAPI'
 import {RateType} from './types/types'
 import {Preloader} from './component/common/Preloader'
+import {subtractWorkday} from './utils/utils'
 
 export function App() {
     const [loading, setLoading] = useState(true)
@@ -14,13 +15,12 @@ export function App() {
 
     useEffect(() => {
         currenciesAPI.getAllCurrenciesRateDaily().then((data) => {
-
             Promise.all(
                 data.map((item) => {
-                    return currenciesAPI.getPreviousRateOneCurrencies(item.Cur_ID, item.Date)
+                    return currenciesAPI.getPreviousRateOneCurrencies(item.Cur_ID, subtractWorkday(item.Date))
                         .then((res) => {
                             item.yesterday = res
-                            item.exchangeRateDifference = item.Cur_OfficialRate - res.Cur_OfficialRate
+                            item.exchangeRateDifference = Number((item.Cur_OfficialRate - res.Cur_OfficialRate).toFixed(4))
                         })
                 })
             ).then(() => {
