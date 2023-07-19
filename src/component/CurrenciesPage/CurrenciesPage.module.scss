@@ -1,0 +1,81 @@
+@import '/src/style/elementColors';
+
+.table {
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  font-size: 1.2rem;
+  color: $bgColorNavBar;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  overflow: hidden;
+
+  th,
+  td {
+    padding: 10px;
+    text-align: left;
+    vertical-align: middle;
+    border: 1px solid #ccc;
+
+    &.negative::before, &.positive::before {
+      margin-right: 5px;
+      font-weight: bold;
+    }
+
+    &.positive::before {
+      content: '\1F845';
+      color: green;
+      right: 5px;
+    }
+
+    &.negative::before {
+      content: '\1F847';
+      color: red;
+    }
+  }
+
+  td:last-child {
+    text-align: right;
+  }
+
+  th {
+    background-color: #f5f5f5;
+    font-weight: 700;
+    text-indent: 0.5em;
+  }
+
+  tbody tr:nth-child(even) {
+    background-color: #f5f5f5;
+  }
+
+  tbody tr:hover {
+    background-color: $activeTextNavBar;
+    cursor: pointer;
+  }
+
+  @media only screen and (max-width: 960px) {
+    th, td {
+      font-size: 1rem;
+    }
+  }
+
+  @media only screen and (max-width: 720px) {
+    td:nth-child(1),
+    th:nth-child(1) {
+      display: none;
+    }
+  }
+
+  @media only screen and (max-width: 480px) {
+    th, td {
+      font-size: 0.8rem;
+    }
+  }
+  @media only screen and (max-width: 360px) {
+    th, td {
+      font-size: 0.6rem;
+    }
+  }
+}
