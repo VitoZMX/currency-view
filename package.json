@@ -4,7 +4,6 @@
   "private": true,
   "homepage": "https://vitozmx.github.io/currency-view",
   "dependencies": {
-    "@mui/icons-material": "^5.14.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^13.2.1",
@@ -18,6 +17,7 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.14.1",
     "react-scripts": "5.0.1",
+    "recharts": "^2.7.2",
     "typescript": "^4.4.2",
     "web-vitals": "^2.1.0"
   },
