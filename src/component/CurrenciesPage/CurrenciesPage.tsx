@@ -35,8 +35,8 @@ export function CurrenciesPage({rateDay}: CurrenciesPagePropsType) {
                         <tr key={row.Cur_ID} onClick={() => handleRedirectToMoreInfo(row.Cur_ID)}>
                             <td>{row.Cur_Name}</td>
                             <td>{row.Cur_Scale} {row.Cur_Abbreviation}</td>
-                            <td className={`${s[rateClass]} ${rateClass}` } >
-                                    <ArrowSVG/>
+                            <td className={`${s[rateClass]} ${rateClass}`}>
+                                {row.exchangeRateDifference !== 0 && (<ArrowSVG/>)}
                                 {row.Cur_OfficialRate} BYN
                             </td>
                             <td>{date}</td>

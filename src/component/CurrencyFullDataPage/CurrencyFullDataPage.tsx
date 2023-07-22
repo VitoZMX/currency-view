@@ -122,8 +122,19 @@ export function CurrencyFullDataPage() {
                                 <time dateTime={ratesCurrency.Date}> {ratesCurrency.Date.replace(/-/g, '.')}</time>
                             </p>
                             <h2>{ratesCurrency.Cur_Scale} {ratesCurrency.Cur_Abbreviation} - {ratesCurrency.Cur_OfficialRate} BYN</h2>
-                            <h2 className={`${s[rateClass]} ${rateClass}`}>{ratesCurrency.exchangeRateDifference && ratesCurrency.exchangeRateDifference > 0 && '+'}{ratesCurrency.exchangeRateDifference} BYN <ArrowSVG/>
-                            </h2>
+
+                            {ratesCurrency.exchangeRateDifference !== 0 ? (
+                                <h2 className={`${s[rateClass]} ${rateClass}`}>
+                                    {ratesCurrency.exchangeRateDifference && ratesCurrency.exchangeRateDifference > 0 && '+'}{ratesCurrency.exchangeRateDifference} BYN <ArrowSVG/>
+                                </h2>
+                            ) : (
+                                <div>
+                                    <p>Курс не изменился с пятницы, так как на выходных торги не проводятся. </p>
+                                    <p>Биржа возобновит работу в понедельник.
+                                        Следите за актуальной информацией на нашем сайте.</p>
+                                </div>
+                            )}
+
                         </div>
                     </div>
                     <div className={s.schedule}>
@@ -148,14 +159,12 @@ export function CurrencyFullDataPage() {
             ) : (
                 <>
                     {userErrorSearch ?
-                        (<div className={s.textNotification}>Валюта с ID {CurIdUrl} не найдена. Пожалуйста,
-                            убедитесь в правильности введенного ID или ознакомьтесь со <span
-                                onClick={handleClick}>списком</span> всех доступных валют.
-                        </div>)
+                        (<p className={s.textNotification}>Валюта с ID {CurIdUrl} не найдена. Пожалуйста,
+                            убедитесь в правильности введенного ID или ознакомьтесь со
+                            <span onClick={handleClick}>списком</span>всех доступных валют.</p>)
                         :
-                        (<div className={s.textNotification}>Введите ID валюты или ознакомьтесь со <span
-                            onClick={handleClick}>списком</span> всех
-                            доступных валют.</div>)}
+                        (<p className={s.textNotification}>Введите ID валюты или ознакомьтесь со
+                            <span onClick={handleClick}>списком</span>всех доступных валют.</p>)}
                     <EnterIdCurrency idCur={CurIdUrl}/>
                 </>
             )}
