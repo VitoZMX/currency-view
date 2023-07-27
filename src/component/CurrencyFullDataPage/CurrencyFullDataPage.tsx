@@ -129,9 +129,8 @@ export function CurrencyFullDataPage() {
                                 </h2>
                             ) : (
                                 <div>
-                                    <p>Курс не изменился с пятницы, так как на выходных торги не проводятся. </p>
-                                    <p>Биржа возобновит работу в понедельник.
-                                        Следите за актуальной информацией на нашем сайте.</p>
+                                    <p>Курс не изменился с {ratesCurrency.yesterday?.Date}</p>
+                                    <p>Следите за актуальной информацией на нашем сайте.</p>
                                 </div>
                             )}
 
@@ -144,7 +143,7 @@ export function CurrencyFullDataPage() {
                                            endDate={startDate}/>
                         <div>
                             <label>Выберете за сколько последних месяц
-                                от {ratesCurrency.Date} отобразить график </label>
+                                от {ratesCurrency.Date.replace(/-/g, '.')} отобразить график </label>
                             <select id="number-select" name="number" value={countMonth}
                                     onChange={handleChangeSelectMonth}>
                                 {Array.from({length: 11}, (_, i) => (
