@@ -1,9 +1,10 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect} from 'react'
 import {CartesianGrid, Legend, Line, LineChart, Tooltip, XAxis, YAxis} from 'recharts'
-import {currenciesAPI} from '../../../API/currenciesAPI'
-import {Preloader} from '../../common/Preloader'
-import {CurrencyRateChartType} from '../../../types/types'
 import s from './CurrencyRateChart.module.scss'
+import {getRateCurrencyDynamics, updateStartEndDates} from '../../../store/currency-reducer'
+import {Dispatch} from 'redux'
+import {useDispatch, useSelector} from 'react-redux'
+import {AppStateType} from '../../../store/store'
 
 type CurrencyRateChartPropsType = {
     id: number
@@ -11,31 +12,29 @@ type CurrencyRateChartPropsType = {
     endDate: string
     scale: number
     abbreviation: string
-    setEndDate?: Function
 }
 
-export function CurrencyRateChart({scale, abbreviation, id, startDate, endDate}: CurrencyRateChartPropsType) {
-    const [currencyRateChart, setCurrencyRateChart] = useState<CurrencyRateChartType[] | null>(null)
-    const [loading, setLoading] = useState(true)
+export function CurrencyRateChart(props: CurrencyRateChartPropsType) {
+    const {scale, abbreviation, id, startDate, endDate} = props
+    const CurrencyRate = useSelector((state: AppStateType) => state.currency.CurrencyRate)
+    const countMonth = useSelector((state: AppStateType) => state.currency.datePeriod.countMonth)
+    const dispatch: Dispatch<any> = useDispatch()
 
     useEffect(() => {
-        currenciesAPI.getRateCurrencyDynamics(id, new Date(startDate).toISOString(), new Date(endDate).toISOString())
-            .then(res =>
-                setCurrencyRateChart(res)
-            ).then(() => setLoading(false))
-    }, [id, startDate, endDate])
+        dispatch(updateStartEndDates(endDate, countMonth))
+    }, [endDate, countMonth, dispatch])
 
-    if (loading) {
-        return <Preloader mini={true}/>
-    }
+    useEffect(() => {
+        dispatch(getRateCurrencyDynamics(id, startDate, endDate))
+    }, [id, startDate, endDate, dispatch])
 
     return (
-        <div>
-            {currencyRateChart && currencyRateChart.length > 0 ? (
+        <>
+            {CurrencyRate.length > 0 ? (
                 <LineChart
                     width={350}
                     height={300}
-                    data={currencyRateChart}
+                    data={CurrencyRate}
                     margin={{
                         top: 20,
                         right: 20,
@@ -56,8 +55,11 @@ export function CurrencyRateChart({scale, abbreviation, id, startDate, endDate}:
                         name={`Курс ${scale} ${abbreviation} - BYN`}
                     />
                 </LineChart>
-            ) : (<div className={s.notification}>Данных по курсу на этот промежуток времени не
-                найдено!</div>)}
-        </div>
+            ) : (
+                <span className={s.notification}>
+                    Данных по курсу на этот промежуток времени не найдено!
+                </span>
+            )}
+        </>
     )
 }

@@ -1,6 +1,9 @@
 import React, {FC, useEffect, useState} from 'react'
-import {useNavigate} from 'react-router-dom'
 import s from './EnterIdCurrency.module.scss'
+import {useNavigate} from 'react-router-dom'
+import {useSelector} from 'react-redux'
+import {AppStateType} from '../../../store/store'
+import {ErrorComponent} from '../../ErrorComponent/ErrorComponent'
 
 type EnterIdCurrencyPropsType = {
     idCur?: string
@@ -8,6 +11,7 @@ type EnterIdCurrencyPropsType = {
 
 export const EnterIdCurrency: FC<EnterIdCurrencyPropsType> = ({idCur}) => {
     const [valueId, setValueId] = useState<number | string>('')
+    const error = useSelector((state: AppStateType) => state.currency.error)
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -24,10 +28,11 @@ export const EnterIdCurrency: FC<EnterIdCurrencyPropsType> = ({idCur}) => {
     }
 
     return (
-        <div>
-            <input className={s.input_field} type={'number'} placeholder="ID…" value={valueId}
+        <div className={s.enterIdContainer}>
+            <input className={s.inputId} type="number" placeholder="ID…" value={valueId}
                    onChange={handleInputChange}/>
-            <button onClick={handleSearchClick}>найти валюту</button>
+            <button className={s.btn} onClick={handleSearchClick}>найти валюту</button>
+            {error && <ErrorComponent error={error}/>}
         </div>
     )
 }

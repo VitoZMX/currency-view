@@ -1,23 +1,13 @@
-@import '/src/style/elementColors';
+@import '/src/style/elementPlaceholders';
 
-.input_field {
-  width: 80px;
-  margin: 0 15px 0 0;
-  padding: 8px;
-  font-size: 14px;
-  line-height: 1.5;
-  color: $colorAllText;
-  background-color: #fff;
-  border: 1px solid $bgColorNavBar;
-  border-radius: 0.25rem;
-  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+.enterIdContainer {
+  display: flex;
 
-  &:focus {
-    outline: none;
-    border-color: $colorButton;
+  .btn {
+    @extend %button;
   }
 
-  &::placeholder {
-    color: $bgColorPage;
+  .inputId {
+    @extend %input;
   }
 }

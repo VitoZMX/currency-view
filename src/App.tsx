@@ -1,47 +1,39 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect} from 'react'
 import './App.scss'
 import {NavBar} from './component/Navbar/NavBar'
 import {HashRouter, Navigate, Route, Routes} from 'react-router-dom'
 import {CurrenciesPage} from './component/CurrenciesPage/CurrenciesPage'
 import {CurrencyFullDataPage} from './component/CurrencyFullDataPage/CurrencyFullDataPage'
-import {currenciesAPI} from './API/currenciesAPI'
-import {RateType} from './types/types'
 import {Preloader} from './component/common/Preloader'
-import {subtractWorkday} from './utils/utils'
+import {Dispatch} from 'redux'
+import {useDispatch, useSelector} from 'react-redux'
+import {initializeApp} from './store/app-reducer'
+import {AppStateType} from './store/store'
+import {EnterIdCurrency} from './component/CurrencyFullDataPage/EnterIdCurrency/EnterIdСurrency'
+import {HomePage} from './component/HomePage/HomePage'
 
 export function App() {
-    const [loading, setLoading] = useState(true)
-    const [rateDay, setRateDay] = useState<RateType[]>([])
+    const dispatch: Dispatch<any> = useDispatch()
+    const initialized = useSelector((state: AppStateType) => state.app.initialized)
 
     useEffect(() => {
-        currenciesAPI.getAllCurrenciesRateDaily().then((data) => {
-            Promise.all(
-                data.map((item) => {
-                    return currenciesAPI.getPreviousRateOneCurrencies(item.Cur_ID, subtractWorkday(item.Date))
-                        .then((res) => {
-                            item.yesterday = res
-                            item.exchangeRateDifference = Number((item.Cur_OfficialRate - res.Cur_OfficialRate).toFixed(4))
-                        })
-                })
-            ).then(() => {
-                setRateDay(data)
-                setLoading(false)
-                console.log(data)
-            })
-        })
-    }, [])
+        dispatch(initializeApp())
+    }, [dispatch])
 
-    if (loading) return <Preloader/>
+    if (initialized) return <Preloader/>
 
     return (
         <HashRouter>
             <NavBar/>
-            <Routes>
-                <Route path="/currencies" element={<CurrenciesPage rateDay={rateDay}/>}/>
-                <Route path="/currency/:id" element={<CurrencyFullDataPage/>}/>
-                <Route path="/currency" element={<CurrencyFullDataPage/>}/>
-                <Route path="/*" element={<Navigate to={'/currencies'}/>}/>
-            </Routes>
+            <div className={'container'}>
+                <Routes>
+                    <Route path="/home" element={<HomePage/>}/>
+                    <Route path="/currencies" element={<CurrenciesPage/>}/>
+                    <Route path="/currency/:id" element={<CurrencyFullDataPage/>}/>
+                    <Route path="/currency" element={<EnterIdCurrency/>}/>
+                    <Route path="/*" element={<Navigate to={'/currencies'}/>}/>
+                </Routes>
+            </div>
         </HashRouter>
     )
 }
