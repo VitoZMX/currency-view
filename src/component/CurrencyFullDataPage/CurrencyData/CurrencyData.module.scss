@@ -1,0 +1,29 @@
+@import "src/style/elementColors";
+
+.currencyData {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.currencyRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 10px 5px;
+  border-bottom: 1px solid $colorBorder;
+}
+
+.currencyLabel {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.currencyValue {
+  flex: 1;
+  text-align: right;
+}
