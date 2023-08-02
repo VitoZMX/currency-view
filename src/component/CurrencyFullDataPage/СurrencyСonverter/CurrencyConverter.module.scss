@@ -1,0 +1,28 @@
+@import "src/style/elementColors";
+@import "src/style/elementPlaceholders";
+
+.converterContainer {
+  margin-top: 20px;
+  border-top: 1px solid $colorBorder;
+  padding-top: 15px;
+}
+
+.converterTitle {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.converterInputContainer {
+  margin-bottom: 10px;
+}
+
+.converterLabel {
+  display: inline-block;
+  width: 50px;
+  font-weight: bold;
+}
+
+.converterInput {
+  @extend %input;
+  width: 150px;
+}
