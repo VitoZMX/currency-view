@@ -1,0 +1,102 @@
+@import "elementColors";
+@import "elementWidth";
+
+%button {
+  display: block;
+  background-color: $bgColorPage;
+  border: 1px solid $colorSecondary;
+  border-radius: 4px;
+  font-size: 14px;
+  color: $colorSecondary;
+  text-transform: uppercase;
+  padding: 10.5px 15px;
+  transition: 0.3s ease;
+
+  &:hover {
+    background-color: $colorSecondary;
+    color: $bgColorPage;
+    cursor: pointer;
+  }
+}
+
+%select {
+  padding: 5px 8px;
+  margin: 0 7px;
+  border: 1px solid $bgColorNavBar;
+  border-radius: 4px;
+  font-size: 14px;
+  background-color: #f2f2f2;
+  color: $colorAllText;
+  text-align-last: center;
+
+  &:focus {
+    outline: none;
+    border-color: $colorSecondary;
+  }
+
+  option:checked {
+    background-color: $colorSecondary;
+    color: $colorTextNavBar;
+  }
+}
+
+%input {
+  width: 80px;
+  margin: 0 15px 0 0;
+  padding: 8px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: $colorAllText;
+  background-color: #fff;
+  border: 1px solid $bgColorNavBar;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+  &:focus {
+    outline: none;
+    border-color: $colorSecondary;
+  }
+
+  &::placeholder {
+    color: $bgColorPage;
+  }
+}
+
+@mixin box-layout($first-child-width, $second-child-width) {
+  & > *:first-child {
+    flex-basis: $first-child-width;
+    margin-right: 15px;
+  }
+
+  & > *:last-child {
+    flex-basis: $second-child-width;
+    margin-right: 0;
+  }
+}
+
+%box {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: stretch;
+  padding-top: 15px;
+  flex-direction: row;
+  margin-bottom: 20px;
+
+  @include box-layout(60%, 40%);
+
+  @media (max-width: $maxWidth720) {
+    flex-direction: column;
+
+    &:last-child {
+      margin-right: 0;
+      flex-direction: column-reverse;
+    }
+
+    & > * {
+      flex-basis: 100%;
+      margin-right: 0;
+      margin-bottom: 15px;
+    }
+  }
+}
